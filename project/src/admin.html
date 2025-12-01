@@ -1,0 +1,421 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - SaveOcean</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(to bottom, #05d3f8, #0f4571, #2d5a9e, #4a6fb5, #5b3a9d, #4a148c, #311b92);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        h1 {
+            font-family: 'Poppins', sans-serif;
+            color: #fff;
+            margin: 0;
+            font-size: 2rem;
+        }
+        
+        nav {
+            display: flex;
+            gap: 40px;
+        }
+        
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: opacity 0.3s;
+            font-weight: 500;
+        }
+        
+        nav a:hover {
+            opacity: 0.8;
+        }
+        
+        hr {
+            border: none;
+            border-top: 3px solid #05d3f8;
+        }
+        
+        .admin-container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        
+        .form-section {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            margin-bottom: 30px;
+        }
+        
+        .form-section h2 {
+            font-family: 'Poppins', sans-serif;
+            color: #0f4571;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            color: #0f4571;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #05d3f8;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: 'Roboto', sans-serif;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #0f4571;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #05d3f8, #0f4571);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .search-section {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            margin-bottom: 30px;
+        }
+        
+        .search-group {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .search-group input {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #05d3f8;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        
+        .list-section {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+        
+        .list-section h3 {
+            font-family: 'Poppins', sans-serif;
+            color: #0f4571;
+            margin-bottom: 20px;
+        }
+        
+        .list-actions {
+            margin-bottom: 20px;
+        }
+        
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+        
+        #userList {
+            list-style: none;
+        }
+        
+        #userList li {
+            background: #f8f9fa;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            border-left: 4px solid #05d3f8;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .user-info {
+            flex: 1;
+        }
+        
+        .user-date {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .user-data {
+            color: #0f4571;
+            font-weight: 500;
+        }
+        
+        .btn-delete {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.3s;
+        }
+        
+        .btn-delete:hover {
+            background: #c82333;
+        }
+        
+        .empty-message {
+            text-align: center;
+            color: #666;
+            padding: 20px;
+            font-style: italic;
+        }
+        
+        footer {
+            background: rgba(0, 0, 0, 0.6);
+            color: #fff;
+            padding: 30px;
+            margin-top: 60px;
+            text-align: center;
+        }
+        
+        .copyright {
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1><i class="fas fa-water"></i> SaveOcean</h1>
+        <nav>
+            <a href="index.html">Início</a>
+            <a href="admin.html">Admin</a>
+            <a href="formulario-agua.html">Condições da Água</a>
+        </nav>
+    </header>
+    <hr>
+    
+    <div class="admin-container">
+        <div class="form-section">
+            <h2><i class="fas fa-user-plus"></i> Cadastrar Novo Usuário</h2>
+            <form id="userForm">
+                <div class="form-group">
+                    <label for="userName">Nome do Usuário</label>
+                    <input type="text" id="userName" name="userName" required placeholder="Digite o nome completo">
+                </div>
+                
+                <div class="form-group">
+                    <label for="userEmail">E-mail</label>
+                    <input type="email" id="userEmail" name="userEmail" required placeholder="exemplo@email.com">
+                </div>
+                
+                <div class="button-group">
+                    <button type="submit" class="btn btn-primary">Cadastrar</button>
+                    <button type="button" id="clearBtn" class="btn btn-secondary">Limpar Campos</button>
+                </div>
+            </form>
+        </div>
+        
+        <div class="search-section">
+            <div class="search-group">
+                <input type="text" id="searchInput" placeholder="Pesquisar por nome ou e-mail...">
+            </div>
+        </div>
+        
+        <div class="list-section">
+            <h3><i class="fas fa-list"></i> Usuários Cadastrados</h3>
+            <div class="list-actions">
+                <button id="deleteAllBtn" class="btn btn-danger">Excluir Todos</button>
+            </div>
+            <ul id="userList"></ul>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="copyright">
+            <p>&copy; 2025 SaveOcean. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Carregar usuários ao iniciar
+        document.addEventListener('DOMContentLoaded', function() {
+            loadUsers();
+        });
+
+        // Cadastrar usuário
+        document.getElementById('userForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('userName').value.trim();
+            const email = document.getElementById('userEmail').value.trim();
+            
+            if (!name || !email) {
+                alert('Por favor, preencha todos os campos!');
+                return;
+            }
+            
+            // Criar objeto do usuário
+            const user = {
+                id: Date.now(),
+                name: name,
+                email: email,
+                date: new Date().toLocaleString('pt-BR')
+            };
+            
+            // Recuperar usuários existentes
+            let users = JSON.parse(localStorage.getItem('users')) || [];
+            
+            // Adicionar novo usuário
+            users.push(user);
+            
+            // Salvar no Local Storage
+            localStorage.setItem('users', JSON.stringify(users));
+            
+            // Limpar campos
+            document.getElementById('userName').value = '';
+            document.getElementById('userEmail').value = '';
+            
+            // Recarregar lista
+            loadUsers();
+            
+            alert('Usuário cadastrado com sucesso!');
+        });
+
+        // Limpar campos
+        document.getElementById('clearBtn').addEventListener('click', function() {
+            document.getElementById('userName').value = '';
+            document.getElementById('userEmail').value = '';
+        });
+
+        // Carregar usuários
+        function loadUsers(filter = '') {
+            const userList = document.getElementById('userList');
+            let users = JSON.parse(localStorage.getItem('users')) || [];
+            
+            // Filtrar se necessário
+            if (filter) {
+                users = users.filter(user => 
+                    user.name.toLowerCase().includes(filter.toLowerCase()) ||
+                    user.email.toLowerCase().includes(filter.toLowerCase())
+                );
+            }
+            
+            // Limpar lista
+            userList.innerHTML = '';
+            
+            if (users.length === 0) {
+                userList.innerHTML = '<div class="empty-message">Nenhum usuário cadastrado</div>';
+                return;
+            }
+            
+            // Adicionar cada usuário na lista
+            users.forEach(user => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <div class="user-info">
+                        <div class="user-date">${user.date}</div>
+                        <div class="user-data"><strong>Nome:</strong> ${user.name}</div>
+                        <div class="user-data"><strong>E-mail:</strong> ${user.email}</div>
+                    </div>
+                    <button class="btn-delete" onclick="deleteUser(${user.id})">
+                        <i class="fas fa-trash"></i> Excluir
+                    </button>
+                `;
+                userList.appendChild(li);
+            });
+        }
+
+        // Excluir usuário individual
+        function deleteUser(id) {
+            if (!confirm('Deseja realmente excluir este usuário?')) {
+                return;
+            }
+            
+            let users = JSON.parse(localStorage.getItem('users')) || [];
+            users = users.filter(user => user.id !== id);
+            localStorage.setItem('users', JSON.stringify(users));
+            loadUsers();
+            alert('Usuário excluído com sucesso!');
+        }
+
+        // Excluir todos os usuários
+        document.getElementById('deleteAllBtn').addEventListener('click', function() {
+            if (!confirm('Deseja realmente excluir TODOS os usuários?')) {
+                return;
+            }
+            
+            localStorage.removeItem('users');
+            loadUsers();
+            alert('Todos os usuários foram excluídos!');
+        });
+
+        // Pesquisar usuários
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            loadUsers(e.target.value);
+        });
+    </script>
+</body>
+</html>
